@@ -1,0 +1,88 @@
+-- Conectando ao Mongo
+
+    mongosh
+
+-- Visualizando Banco de Dados
+
+    show databases
+
+-- Criando Base de Dados e Coleção
+
+    use Banco_de_Dados
+    db.createCollection("Coleção")
+
+-- Excluindo Coleção e Banco de Dados
+
+    db.Coleção.dorp()
+
+    use Banco_de_Dados
+    db.dropDatabase()
+
+-- Inserindo Dados
+
+    1 Novo Dado
+
+    db.series.insertOne({
+        "Série": "Fleabag",
+        "Ano de lançamento": 2016,
+        "Temporadas disponíveis": 2,
+        "Linguagem": "Inglês",
+        "IMDb Avaliação": 8.7})
+
+    Vários Novos Dados
+
+    db.series.insertMany([
+    {   "Série": "Made in Heaven",
+        "Temporadas disponíveis": 1,
+        "Linguagem": "Hindi",
+        "Genero": ["Drama"],
+        "IMDb Avaliação": 8.3,
+        "Classificação": "18+"
+    }
+    ,
+    {
+        "Série": "Homecoming",
+        "Temporadas disponíveis": 2,
+        "Linguagem": "Inglês",
+        "Genero": ["Drama"],
+        "IMDb Avaliação": 7.5,
+        "Classificação": "16+"
+    }])
+
+-- Cosultando Dados
+
+    db.users.find(                          ← collection
+       { age: { $gt: 18  } },               ← query criteria
+       { name: 1, address: 1 }              ← projection
+    ).limit(5)                              ← cursor modifier
+
+    db.series.find().sort({"Série":1})
+
+    db.series.find({"Genero": {$all:["Ação", "Comédia"]}})
+
+-- Atualizando Dados
+
+    db.users.updateMany(                 ← collection
+      { age:  { $lt: 18 } },             ← update filter
+        { $set:  { status: "reject" } }  ← update action
+    )
+
+    db.series.updateOne({"Série": "Grimm"},{$set: {"Temporadas disponíveis": 6}})`
+
+    db.collection.replaceOne(
+       <filter>,
+       <replacement> )
+
+-- Deletando Documentos
+
+    db.users.deleteMany(     ← collection
+       { status: "reject" }  ← delete filter
+    )
+
+    db.series.deleteOne({"Série": "The Boys"})
+
+
+
+
+
+
